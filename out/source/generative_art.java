@@ -68,6 +68,9 @@ public void draw() {
     
     // int count = 0;
     // while(count <= numOfBoxes) {
+
+    translate(0,fibNum(startingFibNum));
+    rotate(radians( -90));
     
     for (int count = 0; count <= numOfBoxes;count++) {
         ellipseMode(CENTER);
@@ -75,33 +78,34 @@ public void draw() {
         stroke(255);
         fill(c1);
         
-        if (count ==  0) {
-            // noFill();
-            translate(0,fibNum(fibRelativeXY));
-            rotate(radians( -90));
-            rect(0, 0,fibNum(startingFibNum), fibNum(startingFibNum));
-            // rotate(radians( 90));
-            // arc(0,fibNum(startingFibNum),2*fibNum(startingFibNum),2*fibNum(startingFibNum),radians(-90),radians(0));
-            
-            // rotate(radians( -90));
-            
-            // reset these variables before continuing loop
-            fibRelativeXY++;
-            fibBoxSize++;
-        } 
+        rect(0, 0,fibNum(startingFibNum),fibNum(startingFibNum));
+        rotate(radians(90));
+        translate(fibNum(startingFibNum), -fibNum(startingFibNum));
+        // if (count ==  0) {
+        //     // noFill();
+        //     translate(0,fibNum(fibRelativeXY));
+        //     rect(0, 0,fibNum(startingFibNum), fibNum(startingFibNum));
+        //     // rotate(radians( 90));
+        //     // arc(0,fibNum(startingFibNum),2*fibNum(startingFibNum),2*fibNum(startingFibNum),radians(-90),radians(0));
+        
+        //     // rotate(radians( -90));
+        
+        //     // reset these variables before continuing loop
+        //     fibRelativeXY++;
+        //     fibBoxSize++;
+// } 
         
         // rest of boxes
-        else {
-            // fill(random(255), random(255), random(255));
-            rotate(radians(90));
-            translate(fibNum(fibRelativeXY), -fibNum(fibRelativeXY));
-            rect(0, 0,fibNum(fibBoxSize),fibNum(fibBoxSize));
-            noFill();
-            // arc(0,fibNum(fibBoxSize),2*fibNum(fibBoxSize),2*fibNum(fibBoxSize),radians(-90),radians(0));
-            
-            
-            // println(fibNum(fibBoxSize));
-        }
+        // else {
+        // fill(random(255), random(255), random(255));
+        
+        // rect(0, 0,fibNum(startingFibNum),fibNum(startingFibNum));
+        noFill();
+        // arc(0,fibNum(fibBoxSize),2*fibNum(fibBoxSize),2*fibNum(fibBoxSize),radians(-90),radians(0));
+        
+        
+        // println(fibNum(fibBoxSize));
+// }
         
         
         // draw elements inside frames
@@ -119,6 +123,8 @@ public void draw() {
             }
             rowNum ++;
         }
+        startingFibNum --;
+
         fibRelativeXY--;
         fibBoxSize--;   
         noLoop();     
@@ -132,11 +138,11 @@ public void drawSpirals(int xElementPosition,int yElementPosition, int startingF
     int rotateTracker = 0;
     int translateXY = 0;
     for (int count = 0; count <= numOfRevolutions;count++) {
-        translate(0,fibNum(startingFibNum+1));
-
+        translate(0,fibNum(startingFibNum + 1));
+        
         translateXY = fibNum(startingFibNum);
         translateTracker += translateXY;
-    // println(translateXY);
+        // println(translateXY);
         ellipseMode(CENTER);
         rotate(radians(90));
         translate(translateXY, -translateXY);
@@ -144,14 +150,14 @@ public void drawSpirals(int xElementPosition,int yElementPosition, int startingF
         // arc(xElementPosition+fibNum(startingFibNum),yElementPosition + fibNum(startingFibNum),2*fibNum(startingFibNum),2*fibNum(startingFibNum),radians(-90),radians(0));        
         rotateTracker += 90;
         startingFibNum--;
-
+        
     }
     println(translateTracker);
     // println(rotateTracker);
-
-    translate(-500, -translateTracker);
-    rotate(radians(-rotateTracker));
-
+    
+    translate( -500, -translateTracker);
+    rotate(radians( -rotateTracker));
+    
 }
 
 // get element size from fib index

@@ -40,53 +40,25 @@ void draw() {
     translate(293 / 2,110 / 2);
     
     background(0);
-    //  setupGrid(15,10);
+
+    // Set fibonacci boxes / layout. starting from bottom left to facilitate portrait orientation. 
+    translate(0,fibNum(startingFibNum));
+    rotate(radians( -90));
     
-    // Set fibonacci layout
     int startingFibNum = 15;
     int numOfBoxes = 11;
     
-    int fibRelativeXY = startingFibNum;
-    int fibBoxSize = fibRelativeXY - 1;
-    
-    // int count = 0;
-    // while(count <= numOfBoxes) {
-    
     for (int count = 0; count <= numOfBoxes;count++) {
         ellipseMode(CENTER);
-        
         stroke(255);
         fill(c1);
-        
-        if (count ==  0) {
-            // noFill();
-            translate(0,fibNum(fibRelativeXY));
-            rotate(radians( -90));
-            rect(0, 0,fibNum(startingFibNum), fibNum(startingFibNum));
-            // rotate(radians( 90));
-            // arc(0,fibNum(startingFibNum),2*fibNum(startingFibNum),2*fibNum(startingFibNum),radians(-90),radians(0));
-            
-            // rotate(radians( -90));
-            
-            // reset these variables before continuing loop
-            fibRelativeXY++;
-            fibBoxSize++;
-        } 
-        
-        // rest of boxes
-        else {
-            // fill(random(255), random(255), random(255));
-            rotate(radians(90));
-            translate(fibNum(fibRelativeXY), -fibNum(fibRelativeXY));
-            rect(0, 0,fibNum(fibBoxSize),fibNum(fibBoxSize));
-            noFill();
-            // arc(0,fibNum(fibBoxSize),2*fibNum(fibBoxSize),2*fibNum(fibBoxSize),radians(-90),radians(0));
-            
-            
-            // println(fibNum(fibBoxSize));
-        }
-        
-        
+        noFill();
+
+        rect(0, 0,fibNum(startingFibNum),fibNum(startingFibNum));
+        rotate(radians(90));
+        translate(fibNum(startingFibNum), -fibNum(startingFibNum));
+
+                
         // draw elements inside frames
         int elementSize = getElementSize(fibBoxSize,fibBoxSize - 6); 
         int rowNum = 0;
@@ -102,6 +74,8 @@ void draw() {
             }
             rowNum ++;
         }
+        startingFibNum --;
+
         fibRelativeXY--;
         fibBoxSize--;   
         noLoop();     
@@ -115,11 +89,11 @@ void drawSpirals(int xElementPosition,int yElementPosition, int startingFibNum,i
     int rotateTracker = 0;
     int translateXY = 0;
     for (int count = 0; count <= numOfRevolutions;count++) {
-        translate(0,fibNum(startingFibNum+1));
-
+        translate(0,fibNum(startingFibNum + 1));
+        
         translateXY = fibNum(startingFibNum);
         translateTracker += translateXY;
-    // println(translateXY);
+        // println(translateXY);
         ellipseMode(CENTER);
         rotate(radians(90));
         translate(translateXY, -translateXY);
@@ -127,14 +101,14 @@ void drawSpirals(int xElementPosition,int yElementPosition, int startingFibNum,i
         // arc(xElementPosition+fibNum(startingFibNum),yElementPosition + fibNum(startingFibNum),2*fibNum(startingFibNum),2*fibNum(startingFibNum),radians(-90),radians(0));        
         rotateTracker += 90;
         startingFibNum--;
-
+        
     }
     println(translateTracker);
     // println(rotateTracker);
-
-    translate(-500, -translateTracker);
-    rotate(radians(-rotateTracker));
-
+    
+    translate( -500, -translateTracker);
+    rotate(radians( -rotateTracker));
+    
 }
 
 // get element size from fib index
