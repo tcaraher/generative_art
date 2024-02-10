@@ -48,14 +48,14 @@ public void setup() {
     // int fibNum_17 = 987;
     // int fibNum_16 = 610;
     /* size commented out by preprocessor */;
-
+    
     // noStroke();
     
     // size(1597,987);
 }
 public void draw() {
-    translate(293/2,110/2);
-
+    translate(293 / 2,110 / 2);
+    
     background(0);
     //  setupGrid(15,10);
     
@@ -71,7 +71,7 @@ public void draw() {
     
     for (int count = 0; count <= numOfBoxes;count++) {
         ellipseMode(CENTER);
-
+        
         stroke(255);
         fill(c1);
         
@@ -82,9 +82,9 @@ public void draw() {
             rect(0, 0,fibNum(startingFibNum), fibNum(startingFibNum));
             // rotate(radians( 90));
             // arc(0,fibNum(startingFibNum),2*fibNum(startingFibNum),2*fibNum(startingFibNum),radians(-90),radians(0));
-
+            
             // rotate(radians( -90));
-
+            
             // reset these variables before continuing loop
             fibRelativeXY++;
             fibBoxSize++;
@@ -98,14 +98,14 @@ public void draw() {
             rect(0, 0,fibNum(fibBoxSize),fibNum(fibBoxSize));
             noFill();
             // arc(0,fibNum(fibBoxSize),2*fibNum(fibBoxSize),2*fibNum(fibBoxSize),radians(-90),radians(0));
-
-
+            
+            
             // println(fibNum(fibBoxSize));
         }
         
         
         // draw elements inside frames
-        int elementSize = getElementSize(fibBoxSize,fibBoxSize - 7); 
+        int elementSize = getElementSize(fibBoxSize,fibBoxSize - 6); 
         int rowNum = 0;
         for (int yElementPosition = 0; yElementPosition <= fibNum(fibBoxSize) - elementSize; yElementPosition += elementSize) {
             int elementNum = 0; 
@@ -115,6 +115,7 @@ public void draw() {
                 // ellipseMode(CORNER);
                 // ellipse(xElementPosition, yElementPosition, elementSize, elementSize);
                 getEllipses(xElementPosition,yElementPosition,elementSize,3);
+                // drawSpirals(xElementPosition,yElementPosition,fibBoxSize-2,3);
             }
             rowNum ++;
         }
@@ -122,6 +123,35 @@ public void draw() {
         fibBoxSize--;   
         noLoop();     
     }
+}
+
+// draw spirals
+
+public void drawSpirals(int xElementPosition,int yElementPosition, int startingFibNum,int numOfRevolutions) {
+    int translateTracker = 0;
+    int rotateTracker = 0;
+    int translateXY = 0;
+    for (int count = 0; count <= numOfRevolutions;count++) {
+        translate(0,fibNum(startingFibNum+1));
+
+        translateXY = fibNum(startingFibNum);
+        translateTracker += translateXY;
+    // println(translateXY);
+        ellipseMode(CENTER);
+        rotate(radians(90));
+        translate(translateXY, -translateXY);
+        rect(0,0,fibNum(startingFibNum),fibNum(startingFibNum));
+        // arc(xElementPosition+fibNum(startingFibNum),yElementPosition + fibNum(startingFibNum),2*fibNum(startingFibNum),2*fibNum(startingFibNum),radians(-90),radians(0));        
+        rotateTracker += 90;
+        startingFibNum--;
+
+    }
+    println(translateTracker);
+    // println(rotateTracker);
+
+    translate(-500, -translateTracker);
+    rotate(radians(-rotateTracker));
+
 }
 
 // get element size from fib index
@@ -139,7 +169,7 @@ public int getElementSize(int boxSize,float boxSizeDivisor) {
 
 public int getRandomColor() {
     int r = PApplet.parseInt(random(3));
-    print(r);
+    // print(r);
     int randomColor = 0;
     if (r == 0)
     {randomColor = c1;   
@@ -170,7 +200,7 @@ public void getEllipses(int xElementPosition, int yElementPosition, int elementS
         if (i == 1) {
             ellipse(xElementPosition, yElementPosition, elementSize, elementSize);
         } else {
-            ellipse(xElementPosition + elementSize/2, yElementPosition + elementSize/2, (elementSize/1.61f)/1.61f, (elementSize/1.61f)/1.61f);
+            ellipse(xElementPosition + elementSize / 2, yElementPosition + elementSize / 2,(elementSize / 1.61f) / 1.61f,(elementSize / 1.61f) / 1.61f);
             // ellipse(xElementPosition + elementSize * 1.6, yElementPosition + elementSize * goldenRatio, elementSize / (goldenRatio / 2 * i), elementSize / (goldenRatio / 2 * i));
         }
         i++;
@@ -216,12 +246,12 @@ public void setupGrid(int startingFibNum, int numOfBoxes) {
         numOfBoxes--;
     }
     
-                //      ellipse(xSquarePosition, rowPosition, elementSize, elementSize);
-                // fill(getRandomColor());
-                // ellipse(xSquarePosition+elementSize/3, rowPosition+elementSize/3, elementSize/1.61, elementSize/1.61);
-                // fill(getRandomColor());
-                // ellipse(xSquarePosition+elementSize/2, rowPosition+elementSize/2, (elementSize/1.61)/1.61, (elementSize/1.61)/1.61);
-                //  ellipse(xSquarePosition + elementSize / 3, rowPosition + elementSize / 3, elementSize / 1.61, elementSize / 1.61);
+    //      ellipse(xSquarePosition, rowPosition, elementSize, elementSize);
+    // fill(getRandomColor());
+    // ellipse(xSquarePosition+elementSize/3, rowPosition+elementSize/3, elementSize/1.61, elementSize/1.61);
+    // fill(getRandomColor());
+    // ellipse(xSquarePosition+elementSize/2, rowPosition+elementSize/2, (elementSize/1.61)/1.61, (elementSize/1.61)/1.61);
+    //  ellipse(xSquarePosition + elementSize / 3, rowPosition + elementSize / 3, elementSize / 1.61, elementSize / 1.61);
     
     
     //Get randomColor rgb version
