@@ -1,0 +1,207 @@
+void setup() {
+    // int fibNum_17 = 987;
+    // int fibNum_16 = 610;
+     size(987,610);
+    noStroke();
+    // size(1597,987);
+    
+}
+
+void draw() {
+     background(0);
+    //  setupGrid(15,10);
+    
+    // Set fibonacci layout
+    int startingFibNum = 15;
+    int numOfBoxes = 11;
+    
+    int fibRelativeXY = startingFibNum;
+    int fibBoxSize = fibRelativeXY - 1;
+    
+    // int count = 0;
+    // while(count <= numOfBoxes) {
+
+    for (int count = 0; count <= numOfBoxes;count++) {
+        if (count ==  0) {
+            fill(random(255), random(255), random(255));
+            translate(0,fibNum(fibRelativeXY));
+            rotate(radians( -90));
+            rect(0, 0,fibNum(startingFibNum), fibNum(startingFibNum));
+            // reset these variables before continuing loop
+            fibRelativeXY++;
+            fibBoxSize++;
+            
+        } 
+        
+        // rest of boxes
+        else {
+            fill(random(255), random(255), random(255));
+            rotate(radians(90));
+            translate(fibNum(fibRelativeXY), -fibNum(fibRelativeXY));
+            rect(0, 0,fibNum(fibBoxSize),fibNum(fibBoxSize));
+            // println(fibNum(fibBoxSize));
+        }
+        
+        
+        // draw elements inside frames
+        stroke(255);
+        int elementSize = getElementSize(fibBoxSize,fibBoxSize/2); 
+        int rowNum = 0;
+        for (int rowPosition = 0; rowPosition < fibNum(fibBoxSize)-elementSize; rowPosition += elementSize) {
+            int elementNum = 0; 
+            // print(elementSize);
+            //print(fibNum(fibBoxSize));
+            for (int xSquarePosition = 0; xSquarePosition < fibNum(fibBoxSize)-elementSize; xSquarePosition += elementSize) {
+                ellipseMode(CORNER);
+                if (xSquarePosition==rowPosition || xSquarePosition==rowPosition+elementSize || xSquarePosition==rowPosition-elementSize){
+                    fill(255);
+                } else {
+                    noFill();
+                }
+                ellipse(xSquarePosition, rowPosition, elementSize, elementSize);
+                                println("count "+ count);
+
+                println("xSq "+ xSquarePosition);
+                println("rpos "  + rowPosition);
+                println("elsize "+ elementSize);
+                println("boxSize "+ fibNum(fibBoxSize));
+                
+
+            }
+            rowNum ++;
+        }
+        fibRelativeXY--;
+        fibBoxSize--;   
+        noLoop();     
+    }
+}
+
+// get element size from fib index
+
+int getElementSize(int boxSize,float boxSizeDivisor) {
+    int elementSize = int(fibNum(boxSize)/boxSizeDivisor);
+    if (elementSize <= fibNum(3)) {
+        return fibNum(3);
+    } else {
+        return elementSize;
+    }
+}
+
+// Get randomColor
+
+// void getRandomColor(){
+//     return color randColor = (random(255), random(255), random(255));
+// }
+
+// Get fibonacci number from provided index
+
+int fibNum(int fibPosition) {
+    if (fibPosition <= 1) {
+        return fibPosition;
+    }
+    return fibonacciHelper(0,1,fibPosition - 1);
+}
+
+int fibonacciHelper(int prev, int current, int fibPosition) {
+    if (fibPosition ==  0) {
+        return current;
+    }
+    return fibonacciHelper(current, prev + current, fibPosition - 1);
+} 
+
+// Set up grid in randomorientation
+
+void setupGrid(int startingFibNum, int numOfBoxes) {
+    noFill();
+    stroke(255);
+    // Initial Box
+    translate(0,fibNum(startingFibNum));
+    rotate(radians( -90));
+    rect(0, 0,fibNum(startingFibNum), fibNum(startingFibNum));
+    
+    int fibRelativeXY = startingFibNum;
+    int fibBoxSize = fibRelativeXY - 1;
+    while(numOfBoxes > 0) {
+        rotate(radians(90));
+        translate(fibNum(fibRelativeXY), -fibNum(fibRelativeXY));
+        rect(0, 0,fibNum(fibBoxSize),fibNum(fibBoxSize));
+        fibRelativeXY--;
+        fibBoxSize--;
+        numOfBoxes--;
+    }
+    
+    
+    
+    // rotate(radians(90));
+    // translate(fibNum(14), - fibNum(14));
+    // rect(0, 0,fibNum(13),fibNum(13));
+    // rect(0,0,50,50);
+    
+    // rotate(radians(90));
+    // translate(fibNum(13), - fibNum(13));
+    // rect(0, 0,fibNum(12),fibNum(12));
+    // rect(0,0,50,50);
+    
+    // rotate(radians(90));
+    // translate(fibNum(12), - fibNum(12));
+    // rect(0, 0,fibNum(11),fibNum(11));
+    
+    // rotate(radians(90));
+    // translate(fibNum(11), - fibNum(11));
+    // rect(0, 0,fibNum(10),fibNum(10));
+    
+    //    rotate(radians(90));
+    // translate(fibNum(10), - fibNum(10));
+    // rect(0, 0,fibNum(9),fibNum(9));
+    
+    // //arc attempts
+    //  rect(0, 0,fibNum(15), fibNum(15));
+    //  translate(fibNum(15) / 2 + 50,fibNum(15) / 2 + 50);
+    //  rotate(radians( - 45));
+    //  arc(0,0,sqrt(sq(fibNum(15)) + sq(fibNum(15))) + 120,300,radians( - 180),radians( - 20));
+    //  rotate(radians(45));
+    //  translate( - fibNum(15) / 2 - 50, - fibNum(15) / 2 - 50);
+    
+    //  rect(fibNum(15), 0,fibNum(14) , fibNum(14));
+    //  translate(fibNum(15) + fibNum(14) / 2,fibNum(14) / 2);
+    //  rotate(radians(45));
+    //  arc(0,0,sqrt(sq(fibNum(14)) + sq(fibNum(14))),100,radians( - 160),radians(0));
+    //  rotate(radians( - 45));
+    //  translate( - (fibNum(15) + fibNum(14) / 2), - (fibNum(14) / 2));
+    // //straight forward boxes
+    //  rect(width - fibNum(13), height - fibNum(13),fibNum(13) , fibNum(13));
+    //  rect(width - fibNum(14), height - fibNum(12),fibNum(12) , fibNum(12));
+    //  rect(width - fibNum(14), height - fibNum(13),fibNum(11) , fibNum(11));
+    //  rect(fibNum(15) + fibNum(11), height - fibNum(13),fibNum(10) , fibNum(10));
+    //  rect(width - fibNum(13) - fibNum(9), fibNum(14) + fibNum(10),fibNum(9) , fibNum(9));
+    //  rect(fibNum(15) + fibNum(11), height - fibNum(12) - fibNum(8),fibNum(8) , fibNum(8));
+    //  rect(fibNum(15) + fibNum(11), height - fibNum(12) - fibNum(9),fibNum(7) , fibNum(7));
+    //  rect(width - fibNum(13) - fibNum(9) - fibNum(6), height - fibNum(12) - fibNum(9),fibNum(6) , fibNum(6));
+    
+    
+    // noFill();
+    // translate(377 / 2,610 / 2);
+    // rotate(radians( - 58));
+    
+    // attempt at arc with corners mode
+    // ellipseMode(CORNERS);
+    // ellipse(100, 100, 200, 200);
+    // arc(0,height, fibNum(15) ,0, radians(0), radians(180));
+    
+    
+    
+    // attempt at finding a pattern for a loop  
+    // rect(xStart, yStart, fibNum(8) , fibNum(8));
+    // rect(xStart + fibNum(8), yStart - fibNum(7),fibNum(9) , fibNum(9));
+    // rect(xStart, yStart - fibNum(7) - fibNum(10),fibNum(10) , fibNum(10));
+    // rect(xStart - fibNum(11), yStart - fibNum(7) - fibNum(10),fibNum(11) , fibNum(11));
+    // rect(xStart - fibNum(11), yStart + fibNum(8),fibNum(12) , fibNum(12));
+    // rect(xStart + fibNum(10), yStart - fibNum(7) - fibNum(10),fibNum(13) , fibNum(13));
+    
+    
+    
+    // line(fibNum(15), 0, fibNum(15), fibNum(16));
+    // line(fibNum(15), fibNum(14), fibNum(16), fibNum(14));
+    // line(fibNum(15), fibNum(14), fibNum(16), fibNum(14));
+    // line(width - fibNum(13),height - fibNum(14),
+}
