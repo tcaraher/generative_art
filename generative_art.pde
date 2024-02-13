@@ -7,6 +7,7 @@ int c3 = #41C0F2;
 int c4 = #77CFF2;
 int c5 = #BDE3F2;
 
+
 int c1Red = 13;
 int c1Green = 139;
 int c1Blue = 217;
@@ -34,6 +35,22 @@ int numOfBoxes = 9;
 
 void setup() {
     size(1280,720);
+    
+    int randomColorA = getRandomColor();
+    int randomColorB = getRandomColor();
+    int randomColorC = getRandomColor();
+    int randomColorD = getRandomColor();
+    int randomColorE = getRandomColor();
+
+
+}
+
+
+void draw() {
+    int spiralFib = 15;
+    int numOfArcs = 9;
+    // print(spiralVisible); 
+    
     background(c1);
     
     int startingFibNum = 15;
@@ -41,17 +58,18 @@ void setup() {
     // Set fibonacci boxes / layout. starting from bottom left to facilitate portrait orientation. 
     
     // below needs refactored
-    int fibBoxSize = startingFibNum;
+
     
-    translate(0,fibNum(startingFibNum));
+    translate(0,fibNum(spiralFib));
     rotate(radians( -90));
-    
+    //<>//
     
     for (int count = 0; count < numOfBoxes;count++) {
-        fill(c1Red,c1Green,c1Blue);
-        //<>//
+        
+
+        fill(c1Red,c1Green,c1Blue);        
         noStroke();
-        int elementSize = getElementSize(fibBoxSize,8); 
+        int elementSize = getElementSize(startingFibNum,8); 
         int rowNum = 0;
         for (int yElementPosition = 0; yElementPosition <= fibNum(startingFibNum) - elementSize; yElementPosition += elementSize) {
             int elementNum = 0; 
@@ -64,47 +82,27 @@ void setup() {
             }
             rowNum ++;
         }
-        
+
+        ellipseMode(CENTER);
+        strokeWeight(20);
+        noFill();
+        stroke(c5Red,c5Green,c5Blue,spiralVisible);
+        arc(0,fibNum(spiralFib),2 * fibNum(spiralFib),2 * fibNum(spiralFib),radians( -90),radians(0));
+
         rotate(radians(90));
         translate(fibNum(startingFibNum), -fibNum(startingFibNum));
         
         startingFibNum --;
-        fibBoxSize--;    
+        spiralFib--;        
+        
+        // if (!spiralToggle) {
+        //  stroke(c1);
+        //  // noStroke();
+// } else {
+        //  stroke(c5);
+        
+// }
     }
-}
-
-
-void draw() {
-    int spiralFib = 15;
-    int numOfArcs = 9;
-    print(spiralVisible); 
-    
-    
-    translate(0,fibNum(spiralFib));
-    rotate(radians( -90));
-    //<>//
-    for (int count = 0; count < numOfArcs;count++) {
-        ellipseMode(CENTER);
-        
-        strokeWeight(20);
-        noFill();
-        
-        
-        arc(0,fibNum(spiralFib),2 * fibNum(spiralFib),2 * fibNum(spiralFib),radians( -90),radians(0));
-        
-        rotate(radians(90));
-        translate(fibNum(spiralFib), -fibNum(spiralFib));
-        
-        spiralFib --;
-    }
-    
-    // if (!spiralToggle) {
-    //     stroke(c1);
-    //     // noStroke();
-    // } else {
-    //     stroke(c5);
-        
-    // }
 }
 
 // get element size from fibindex
@@ -115,16 +113,16 @@ int getElementSize(int boxSize,float boxSizeDivisor) {
         return fibNum(1);
     } else {
         return elementSize;
+        }
     }
-}
 
 
 void mousePressed() {
     spiralToggle = true;
-    spiralVisible = 100;
-    stroke(c5);
+    spiralVisible = 1000;
+    stroke(c1);
     // strokeWeight(20);
-}
+    }
 
 void mouseReleased() {
     spiralToggle = false;
@@ -132,7 +130,7 @@ void mouseReleased() {
     // noStroke();
     stroke(c1);
     // strokeWeight(0);
-}
+    }
 
 
 int getRandomColor() {
@@ -141,18 +139,18 @@ int getRandomColor() {
     int randomColor = 0;
     if (r == 0)
         {randomColor = c1;   
-    } 
+        } 
     else if (r ==  1) {
         randomColor = c2; 
-    }
+        }
     else if (r ==  2) {
         randomColor = c3;
-    }
+        }
     else if (r == 3) {
         randomColor = c4;
-    }
+        }
     return randomColor;
-}
+    }
 
 // Ellipse Element
 
@@ -165,39 +163,39 @@ void getEllipses(int xElementPosition, int yElementPosition, int elementSize,int
         
         if (xElementPosition ==  yElementPosition || xElementPosition ==  yElementPosition + elementSize || xElementPosition ==  yElementPosition - elementSize) {
             fill(c5);         
-        } else {    
+            } else {    
             fill(getRandomColor());        
-        }
+            }
         
         if (i == 1) {
             ellipse(xElementPosition, yElementPosition, elementSize,elementSize);
-        } else {
+            } else {
             ellipse(xElementPosition + elementSize / (goldenRatio * 2), yElementPosition + elementSize / (goldenRatio * 2), elementSize / (goldenRatio), elementSize / (goldenRatio));
             ellipse(xElementPosition + elementSize / 2, yElementPosition + elementSize / 2,(elementSize / 1.61) / 1.61,(elementSize / 1.61) / 1.61);
             
-        }
+            }
         
         i++;
         numOfInnerCircles--;
-    }
+        }
     
-}
+    }
 
 // Get fibonacci number from provided index
 
 int fibNum(int fibPosition) {
     if (fibPosition <= 1) {
         return fibPosition;
-    }
+        }
     return fibonacciHelper(0,1,fibPosition - 1);
-}
+    }
 
 int fibonacciHelper(int prev, int current, int fibPosition) {
     if (fibPosition ==  0) {
         return current;
-    }
+        }
     return fibonacciHelper(current, prev + current, fibPosition - 1);
-} 
+    } 
 
 // Set up grid in randomorientation
 
@@ -218,7 +216,7 @@ void setupGrid(int startingFibNum, int numOfBoxes) {
         fibRelativeXY--;
         fibBoxSize--;
         numOfBoxes--;
-    }
+        }
     
     //      ellipse(xSquarePosition, rowPosition, elementSize, elementSize);
     // fill(getRandomColor());
@@ -242,7 +240,7 @@ void setupGrid(int startingFibNum, int numOfBoxes) {
     //  else if (r ==  2) {
     //  return c3Red;
     //     }
-// } 
+    // } 
     // int getGreen() {
     //  if (r == 0)
     //  {return c1Green;   
@@ -253,7 +251,7 @@ void setupGrid(int startingFibNum, int numOfBoxes) {
     //  else if (r ==  2) {
     //  return c3Green;
     //     }
-// } 
+    // } 
     
     // int getBlue() {
     //  if (r == 0)
@@ -265,7 +263,7 @@ void setupGrid(int startingFibNum, int numOfBoxes) {
     //  else if (r ==  2) {
     //  return c3Blue;
     //     }
-// } 
+    // } 
     
     // rotate(radians(90));
     // translate(fibNum(14), -fibNum(14));
@@ -339,4 +337,4 @@ void setupGrid(int startingFibNum, int numOfBoxes) {
     // line(fibNum(15), fibNum(14), fibNum(16), fibNum(14));
     // line(fibNum(15), fibNum(14), fibNum(16), fibNum(14));
     // line(width - fibNum(13),height - fibNum(14),
-}
+    }
