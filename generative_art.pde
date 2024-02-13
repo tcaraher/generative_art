@@ -26,19 +26,20 @@ int c4Blue = 242;
 int c5Red = 189;
 int c5Green = 227;
 int c5Blue = 242;
-        
+
+boolean spiralToggle = false;
 int spiralVisible = 0; 
-    int startingFibNum = 15;
-    int numOfBoxes = 9;
+int startingFibNum = 15;
+int numOfBoxes = 9;
 
 void setup() {
     size(1280,720);
     background(c1);
     
-        int startingFibNum = 15;
+    int startingFibNum = 15;
     int numOfBoxes = 9;
     // Set fibonacci boxes / layout. starting from bottom left to facilitate portrait orientation. 
-
+    
     // below needs refactored
     int fibBoxSize = startingFibNum;
     
@@ -48,7 +49,7 @@ void setup() {
     
     for (int count = 0; count < numOfBoxes;count++) {
         fill(c1Red,c1Green,c1Blue);
-        
+        //<>//
         noStroke();
         int elementSize = getElementSize(fibBoxSize,8); 
         int rowNum = 0;
@@ -63,7 +64,7 @@ void setup() {
             }
             rowNum ++;
         }
-               
+        
         rotate(radians(90));
         translate(fibNum(startingFibNum), -fibNum(startingFibNum));
         
@@ -76,25 +77,34 @@ void setup() {
 void draw() {
     int spiralFib = 15;
     int numOfArcs = 9;
-
+    print(spiralVisible); 
+    
+    
     translate(0,fibNum(spiralFib));
     rotate(radians( -90));
-    
+    //<>//
     for (int count = 0; count < numOfArcs;count++) {
         ellipseMode(CENTER);
-
+        
         strokeWeight(20);
-        stroke(spiralVisible);
         noFill();
+        
+        
         arc(0,fibNum(spiralFib),2 * fibNum(spiralFib),2 * fibNum(spiralFib),radians( -90),radians(0));
-        strokeWeight(1);        
-        stroke(255);
-
+        
         rotate(radians(90));
         translate(fibNum(spiralFib), -fibNum(spiralFib));
         
         spiralFib --;
     }
+    
+    // if (!spiralToggle) {
+    //     stroke(c1);
+    //     // noStroke();
+    // } else {
+    //     stroke(c5);
+        
+    // }
 }
 
 // get element size from fibindex
@@ -108,17 +118,22 @@ int getElementSize(int boxSize,float boxSizeDivisor) {
     }
 }
 
+
 void mousePressed() {
-      if (spiralVisible == 0) {
-    spiralVisible = c1;
-  } else {
-    spiralVisible = c4;
-  }
+    spiralToggle = true;
+    spiralVisible = 100;
+    stroke(c5);
+    // strokeWeight(20);
 }
 
-// void mouseReleased() {
-    
-// }
+void mouseReleased() {
+    spiralToggle = false;
+    spiralVisible = 0;
+    // noStroke();
+    stroke(c1);
+    // strokeWeight(0);
+}
+
 
 int getRandomColor() {
     int r = int(random(4));
