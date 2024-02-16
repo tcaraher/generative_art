@@ -27,16 +27,29 @@ int columns = 16;
 
 // Colors
 // https://color.adobe.com/This-Green-color-theme-fadb0fab-4777-45c0-a4fe-658b2b84af75
-int c1 = 0xFF00261C;
-int c2 = 0xFF044D29;
-int c3 = 0xFF168039;
-int c4 = 0xFF45BF55;
-int c5 = 0xFF96ED89;
+int c1 = 0xFF348888;
+int c2 = 0xFF22BABB;
+int c3 = 0xFF9EF8EE;
+int c4 = 0xFFFA7F08;
+int c5 = 0xFFF24405;
 
 // For use with opacity changes on some elements
-int c5Red = 150;
-int c5Green = 237;
-int c5Blue = 137;
+int c5Red = 242;
+int c5Green = 68;
+int c5Blue = 5;
+
+// // Colors
+// // https://color.adobe.com/This-Green-color-theme-fadb0fab-4777-45c0-a4fe-658b2b84af75
+// int c1 = #00261C;
+// int c2 = #044D29;
+// int c3 = #168039;
+// int c4 = #45BF55;
+// int c5 = #96ED89;
+
+// // For use with opacity changes on some elements
+// int c5Red = 150;
+// int c5Green = 237;
+// int c5Blue = 137;
 
 // "random" color variables. Calls custom method choosing from 5 colors above
 
