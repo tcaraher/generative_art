@@ -1,7 +1,17 @@
+/*
+This is a generative art piece entitled, "Pingala".
+
+It is entirely based on the Fibonacci sequece and dedicated to Pingala,
+who was the first to describe (in around 200 BC) what is now known as 
+the Fibonacci sequence,which was named after Leonardo of Pisa (Fibonacci).
+
+Every grid,layout and element is devised by or directly related to the sequence in some way.
+*/
+
 String Name = "Tom Caraher";
 String studentNumber = "20108883";
 
-String Title = "Ode To Fibo";
+String Title = "Pingala";
 
 // Constants
 float goldenRatio = 1.61803398875;
@@ -9,30 +19,20 @@ int rows = 9;
 int columns = 16;
 
 // Colors
-// https://color.adobe.com/This-Green-color-theme-fadb0fab-4777-45c0-a4fe-658b2b84af75
-int c1 = #348888;
-int c2 = #22BABB;
-int c3 = #9EF8EE;
-int c4 = #FA7F08;
-int c5 = #F24405;
+// https://color.adobe.com/s://adobe.ly/2ynad3s
+int c1 = color(70,137,102);
+int c2 = color(142,40,0);
+int c3 = color(182,73,38);
+int c4 = color(255,176,59);
+int c5 = color(255,240,165);
+color invisible = color(255,240,165,0);
 
-// For use with opacity changes on some elements
-int c5Red = 242;
-int c5Green = 68;
-int c5Blue = 5;
+// For use with opacity changes on spiral and numbers, both controlled with different variables via mouse
+int c5Red = 255;
+int c5Green = 240;
+int c5Blue = 165;
 
-// // Colors
-// // https://color.adobe.com/This-Green-color-theme-fadb0fab-4777-45c0-a4fe-658b2b84af75
-// int c1 = #00261C;
-// int c2 = #044D29;
-// int c3 = #168039;
-// int c4 = #45BF55;
-// int c5 = #96ED89;
 
-// // For use with opacity changes on some elements
-// int c5Red = 150;
-// int c5Green = 237;
-// int c5Blue = 137;
 
 // "random" color variables. Calls custom method choosing from 5 colors above
 
@@ -96,7 +96,7 @@ void draw() {
       int elementNum = 0;
       for (int xElementPosition = 0; xElementPosition <= fibNum(startingFibNum) - elementSize; xElementPosition += elementSize) {
         int numOfInnerEllipses = 4;
-        // Draw each ellipse/inner ellipses.
+        // Draw each ellipse/inner ellipses. Check first which fib box we're on, and draw less ellipses
         if (count > 6) {
           numOfInnerEllipses = 3;
         }
@@ -148,7 +148,7 @@ void mouseClicked() {
 
 void mousePressed() {
   if (mouseButton == RIGHT) {
-    save(Name + "-" + studentNumber + ".PNG");
+    save(Title + ".PNG");
   }
 }
 
@@ -162,14 +162,14 @@ void mouseMoved() {
 }
 
 void mouseWheel(MouseEvent event) {
-  float upOrDown = event.getCount();
+  int upOrDown = event.getCount();
   fibNumVisibility += upOrDown;
 }
 
 /*
  Write fibonacci numbers as part of backing grid.
  Each number overflows into the next cell as it grows.
- Calls a separate function returning a Long
+ Calls a separate function returning a Long, as I ran out of int digits
  */
 
 void drawFibonacciNumberGrid() {
@@ -222,19 +222,19 @@ void drawFibonacciNumberGrid() {
   }
 }
 
-// Gets a random color from my pallate defined with global variables, Only want first 4, not 5 colors, as I have another application for the 5th color
+// Gets a random color from my palette defined with global variables, Only want first 4, not 5 colors, as I have another application for the 5th color
 int getRandomColor() {
-  int r = int(random(4));
+  int r = int(random(5));
   int randomColor = 0;
   if (r == 0)
   {
-    randomColor = c1;
-  } else if (r ==  1) {
     randomColor = c2;
-  } else if (r ==  2) {
+  } else if (r ==  1) {
     randomColor = c3;
-  } else if (r == 3) {
+  } else if (r ==  2) {
     randomColor = c4;
+  } else {
+    randomColor = invisible;
   }
   return randomColor;
 }
@@ -288,9 +288,9 @@ void setUpEllipses(int xElementPosition, int yElementPosition, int elementSize, 
 }
 
 /*
-Drawing the actual ellipse, and inner ellipses. Passes in the chosen color from setUpEllipses as colorA,B,C
+Drawing the actual ellipses and inner ellipses. Passes in the chosen color from setUpEllipses as colorA,B,C
  Instead of choosing to use the fibNum method here to determine ellipse sizes, I have chosen another approach
- with the golden ratio, the resulting ratio average from the fibonacci sequence.
+ using the golden ratio, which is the resulting ratio average from the fibonacci sequence.
  */
 void drawEllipses(float xElementPosition, float yElementPosition, float elementSize, int numOfInnerCircles, int circleColorA, int circleColorB, int circleColorC) {
   ellipseMode(CORNER);
