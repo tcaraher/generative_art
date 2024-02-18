@@ -4,7 +4,6 @@ This is a generative art piece entitled, "Pingala".
 It is entirely based on the Fibonacci sequece and dedicated to Pingala,
 who was the first to describe (in around 200 BC) what is now known as 
 the Fibonacci sequence,which was named after Leonardo of Pisa (Fibonacci).
-
 Every grid,layout and element is devised by or directly related to the sequence in some way.
 */
 
@@ -12,6 +11,7 @@ String Name = "Tom Caraher";
 String studentNumber = "20108883";
 
 String Title = "Pingala";
+String fibonacciNumbers = "0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597 2584 4181 6765 10946 17711 28657 46368 75025 121393 196418 317811 514229 832040 1346269 2178309 3524578 5702887 9227465 14930352 24157817 39088169 63245986 102334155 165580141 267914296 433494437 701408733 1134903170 1836311903 2971215073 4807526976 7778742049 12586269025 20365011074 32951280099 53316291173 86267571272 139583862445 225851433717 365435296162 591286729879 956722026041 1548008755920 2504730781961 4052739537881 6557470319842 10610209857723 17167680177565 27777890035288 44945570212853 72723460248141 117669030460994 190392490709135 308061521170129 498454011879264 806515533049393 1304969544928657 ";
 
 // Constants
 float goldenRatio = 1.61803398875;
@@ -123,10 +123,10 @@ void draw() {
     //Work down to smallest fibonacci numbers
     startingFibNum --;
   }
-
   // Reposition canvas with translate to draw name etc in correct locations
-  translate(840, 580);
-  rotate(radians( 180));
+  translate(835, 580);
+  rotate(radians(180));
+  // Calls custom method to display my id information - name and student number
   displayInfo();
 }
 
@@ -169,34 +169,34 @@ void mouseWheel(MouseEvent event) {
 /*
  Write fibonacci numbers as part of backing grid.
  Each number overflows into the next cell as it grows.
- Calls a separate function returning a Long, as I ran out of int digits
+ Uses a hard coded string unfortunately, due to project constraints regarding casting. 
  */
 
 void drawFibonacciNumberGrid() {
-  int longFibPosition = 0;
   fill(c5Red, c5Green, c5Blue, fibNumVisibility);
-  textSize(30);
+  textSize(31);
   textAlign(LEFT, CENTER);
+  String newFibNumbers = fibonacciNumbers;
 
   // Iterate over 16:9 grid, putting a fib number in each.
   // When the number grows too large for font size, split it and place in next cell
   for (int fibStringRowNum = 0; fibStringRowNum < rows; fibStringRowNum ++) {
     for (int fibStringElementNum = 0; fibStringElementNum < columns; fibStringElementNum ++) {
-
-      // str() processing method does not seem to work properly converting a long. bug? Possibly my error
-      String fibString = String.valueOf(longFibNum(longFibPosition));
       int maxCharNum = 5;
-
-      // Checks for fib number(in string format) above the max char amount for that font size(5)
-      if (fibString.length() >= maxCharNum) {
+      // Iterates over the string of fibonacci numbers to find the spaces separating each number and updating to the new string.
+      int fibonacciSpaceIndex = newFibNumbers.indexOf(" ");
+      String fibonacciSplit = newFibNumbers.substring(0,fibonacciSpaceIndex);
+      newFibNumbers = newFibNumbers.substring(fibonacciSpaceIndex+1);
+      // Checks for fib number(in string format) above the max char amount for my chosen font size(5) - hard coded unfortunately
+      if (fibonacciSplit.length() >= maxCharNum) {
         int index = 0;
-        int fibStringLength = fibString.length();
+        int fibStringLength = fibonacciSplit.length();
 
         // Splits and draws first part of number
-        String subFibString = fibString.substring(index, maxCharNum);
-        text(subFibString, fibStringElementNum * 80, fibStringRowNum * 80, 80, 80);
+        String subFibString = fibonacciSplit.substring(index, maxCharNum);
+        text(subFibString, fibStringElementNum * (width/columns) , fibStringRowNum * (height/rows), (width/columns), (height/rows));
 
-        fibStringLength = fibString.length() - maxCharNum;
+        fibStringLength = fibonacciSplit.length() - maxCharNum;
 
         // for rest of the number, iterate and draw the new strings
         while (fibStringLength > 0) {
@@ -204,20 +204,20 @@ void drawFibonacciNumberGrid() {
 
           // Checks if we're on the last part of the string, and applies correct .substring param, or continues
           if (fibStringLength < maxCharNum) {
-            subFibString = fibString.substring(index);
+            subFibString = fibonacciSplit.substring(index);
           } else {
-            subFibString = fibString.substring(index, index + maxCharNum);
+            subFibString = fibonacciSplit.substring(index, index + maxCharNum);
           }
 
           fibStringElementNum ++;
           fibStringLength -= maxCharNum;
 
-          text(subFibString, fibStringElementNum * 80, fibStringRowNum * 80, 80, 80);
+          text(subFibString, fibStringElementNum * (width/columns) , fibStringRowNum * (height/rows), (width/columns), (height/rows));
         }
       } else {
-        text(fibString, fibStringElementNum * 80, fibStringRowNum * 80, 80, 80);
+        text(fibonacciSplit, fibStringElementNum * (width/columns) , fibStringRowNum * (height/rows), (width/columns), (height/rows));
       }
-      longFibPosition++;
+
     }
   }
 }
@@ -338,32 +338,15 @@ int fibonacciHelper(int prev, int current, int fibPosition) {
   return fibonacciHelper(current, prev + current, fibPosition - 1);
 }
 
-// Separated long version of above method. I only use this for the fib number grid displaying each number, as it goes far beyond the int limit.
-// (in fact I hit the long limit as well without some optimization!)
-// More efficient to use the int version in the majority of the code as it takes less bytes and its more than enough.
-long longFibNum(int fibPosition) {
-  if (fibPosition <= 1) {
-    return fibPosition;
-  }
-  return longFibonacciHelper(0, 1, fibPosition - 1);
-}
-
-long longFibonacciHelper(long prev, long current, long fibPosition) {
-  if (fibPosition ==  0) {
-    return current;
-  }
-  return longFibonacciHelper(current, prev + current, fibPosition - 1);
-}
-
 // Displays name and student number
 void displayInfo() {
   fill(255);
-  textSize(36);
+  textSize(50);
   textAlign(LEFT, CENTER);
   String upperCaseName = Name.toUpperCase();
   for (int i = 0; i < Name.length(); i++) {
     text(upperCaseName.charAt(i), i * (width / columns), (height / rows));
   }
-  textSize(33);
-  text(studentNumber, -15, (height/rows)*rows);
+  textSize(36);
+  text(studentNumber, -23, (height/rows)*rows+23);
 }
