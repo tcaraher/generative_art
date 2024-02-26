@@ -72,7 +72,7 @@ void draw() {
   drawFibonacciNumberGrid();
 
   // Fibonacci boxes,sprials, and ellipses using the golden ratio.
-  translate((width - fibNum(16)) / 2, (height - fibNum(15)) / 2 + 40);
+  translate((width - fibNum(16)) / 2, (height - fibNum(15)) / 2);
   int startingFibNum = 15;
   int numOfBoxes = 11;
 
@@ -123,11 +123,6 @@ void draw() {
     //Work down to smallest fibonacci numbers
     startingFibNum --;
   }
-  // Reposition canvas with translate to draw name etc in correct locations
-  translate(835, 580);
-  rotate(radians(180));
-  // Calls custom method to display my id information - name and student number
-  displayInfo();
 }
 
 
